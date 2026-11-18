@@ -2,7 +2,7 @@
 name: designer
 description: Designs an interface for a module and reports the proposal, with its usage, what it hides and where it is weak. Dispatch several in parallel under different constraints to compare alternatives.
 tools: read, grep, find, ls, search_graph, trace_path, get_code_snippet, get_architecture, search_code, check_index_coverage, index_status, index_repository
-model: openai-codex/gpt-6-astra
+model: openai-codex/gpt-6.2-astra
 thinking: medium
 system-prompt: append
 auto-exit: true
