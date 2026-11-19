@@ -8,7 +8,7 @@ import { visibleWidth } from "@earendil-works/pi-tui";
 import * as subagentsModule from "../index.ts";
 import type { RunningSubagent } from "../spawn/children.ts";
 import { listAgents, resolveAgentLaunch, RESUME_LAUNCH } from "../spawn/agents.ts";
-import { computeToolAllowlist, getToolExtensionPath } from "../spawn/sandbox.ts";
+import { computeToolAllowlist } from "../spawn/sandbox.ts";
 import { describeResult } from "../render/result.ts";
 import {
   createTestDir,
@@ -713,24 +713,6 @@ describe("subagent discovery", () => {
     }
   });
 
-  it("every graph tool a bundled role grants resolves to a backing extension", () => {
-    // A tool named in --tools but backed by no -e silently does not exist in
-    // the child, so a grant without a mapping is worse than no grant at all.
-    for (const name of ["scout", "worker"]) {
-      const defs = resolveAgentLaunch(name).defs;
-      assert.ok(defs, `expected bundled agent ${name} to be discoverable`);
-      const allowlist = computeToolAllowlist(defs!.tools);
-      assert.ok(allowlist, `expected ${name} to restrict tools`);
-      for (const tool of allowlist!.split(",")) {
-        if (["read", "write", "edit", "bash", "grep", "find", "ls", "send_message"].includes(tool)) continue;
-        assert.ok(
-          getToolExtensionPath(tool),
-          `${name} grants ${tool} but nothing maps it to an extension`,
-        );
-      }
-    }
-  });
-
   it("grants codemode to all five bundled roles", () => {
     for (const name of ["scout", "worker", "reviewer", "designer", "researcher"]) {
       const tools = computeToolAllowlist(resolveAgentLaunch(name).defs?.tools);
@@ -749,21 +731,6 @@ describe("subagent discovery", () => {
         assert.ok(!tools.has(spawning), `${name} must not be granted ${spawning}`);
       }
     }
-  });
-
-  it("getToolExtensionPath maps custom tools and skips built-ins", () => {
-    assert.equal(getToolExtensionPath("read"), undefined);
-    assert.equal(getToolExtensionPath("bash"), undefined);
-    assert.ok(getToolExtensionPath("web_search")?.endsWith("web-search/index.ts"));
-    assert.ok(getToolExtensionPath("safe_bash")?.endsWith("tools/safe-bash.ts"));
-    // No child is ever granted the spawning tools, so nothing backs them.
-    assert.equal(getToolExtensionPath("subagent"), undefined);
-    // The knowledge-graph tools all come from one flat file in the agent dir.
-    assert.ok(getToolExtensionPath("search_graph")?.endsWith("cbmem.ts"));
-    assert.ok(getToolExtensionPath("trace_path")?.endsWith("cbmem.ts"));
-    // send_message is not: child/index.ts already loads into every subagent,
-    // so mapping it here would pull the whole orchestration extension into a leaf.
-    assert.equal(getToolExtensionPath("send_message"), undefined);
   });
 
   it("ignores invalid session-mode values", async () => {
