@@ -414,14 +414,7 @@ export default function (pi: ExtensionAPI) {
 		handler: async (_args, ctx) => {
 			disabled = !disabled;
 			publishStatus(ctx);
-			if (disabled) {
-				ctx.ui.notify(
-					"bash-guard DISABLED for this session. Catastrophic operations are still hard-blocked. Run /bash-guard again to re-enable.",
-					"warning",
-				);
-			} else {
-				ctx.ui.notify("bash-guard re-enabled.", "info");
-			}
+			if (!disabled) ctx.ui.notify("bash-guard re-enabled.", "info");
 		},
 	});
 
