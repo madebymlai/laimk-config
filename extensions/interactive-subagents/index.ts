@@ -1039,14 +1039,17 @@ export default function subagentsExtension(
   // Capture the UI context for widget updates
   pi.on("session_start", (_event, ctx) => {
     latestCtx = ctx;
-    if (ctx.mode === "tui" && isMuxAvailable()) {
-      surfaceListDir = mkdtempSync(join(tmpdir(), "pi-subagent-list-"));
-      publishSurfaceList([]);
-      configureSurfaceList(
-        `${shellEscape(process.execPath)} ${shellEscape(paths.surfaceListEntry)} ` +
-          shellEscape(join(surfaceListDir, "list.json")),
-      );
+    if (ctx.mode !== "tui") return;
+    if (!isMuxAvailable()) {
+      ctx.ui.notify(muxUnavailableMessage(), "warning");
+      return;
     }
+    surfaceListDir = mkdtempSync(join(tmpdir(), "pi-subagent-list-"));
+    publishSurfaceList([]);
+    configureSurfaceList(
+      `${shellEscape(process.execPath)} ${shellEscape(paths.surfaceListEntry)} ` +
+        shellEscape(join(surfaceListDir, "list.json")),
+    );
   });
 
   // Clean up on session shutdown

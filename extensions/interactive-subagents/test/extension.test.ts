@@ -54,6 +54,15 @@ function entry(id: string, name = id): RunningSubagent {
 const forever = () => new Promise<void>(() => {});
 
 describe("extension wiring", () => {
+  it("warns at interactive session start outside tmux", async () => {
+    const { api, emit } = createMockExtensionApi();
+    const { ctx, notifications } = createMockContext();
+    ctx.mode = "tui";
+    subagentsModule.default(api, { children: createChildren() });
+    await emit("session_start", { reason: "startup" }, ctx);
+    assert.ok(notifications.some(({ level, text }) => level === "warning" && /subagents require tmux/i.test(text)));
+  });
+
   it("labels fresh and resumed panes with the display name and actual role", async () => {
     const dir = mkdtempSync(join(tmpdir(), "pi-header-wiring-"));
     const socket = join(dir, "socket");
