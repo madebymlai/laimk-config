@@ -731,6 +731,13 @@ describe("subagent discovery", () => {
     }
   });
 
+  it("grants codemode to all five bundled roles", () => {
+    for (const name of ["scout", "worker", "reviewer", "designer", "researcher"]) {
+      const tools = computeToolAllowlist(resolveAgentLaunch(name).defs?.tools);
+      assert.ok(tools?.split(",").includes("codemode"), `${name} must have codemode`);
+    }
+  });
+
   it("no bundled role is granted the spawning tools", () => {
     // Only the top-level session spawns. A role's allowlist must never contain
     // them, and there is no frontmatter field that could ask for them.

@@ -1,7 +1,7 @@
 ---
 name: researcher
 description: Web research on a question the repository cannot answer. Searches, reads sources in full, returns a short sourced brief.
-tools: web_search, web_fetch, safe_bash
+tools: web_search, web_fetch, safe_bash, codemode
 model: deepseek/deepseek-flash
 thinking: medium
 system-prompt: replace

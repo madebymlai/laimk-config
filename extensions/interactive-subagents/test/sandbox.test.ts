@@ -118,6 +118,15 @@ describe("sandbox.ts", () => {
       });
     });
 
+    it("loads builtin:codemode when codemode is granted", () => {
+      withTempDir((dir) => {
+        const args = sandboxArgs(loadout({ toolAllowlist: "read,codemode" }), {
+          artifactDir: dir, name: "w",
+        });
+        assert.deepEqual(args.filter((_, i) => args[i - 1] === "-e"), ["'builtin:codemode'"]);
+      });
+    });
+
     it("emits one -e per backing extension, not per tool", () => {
       withTempDir((dir) => {
         // Every cbmem tool comes from one flat file.

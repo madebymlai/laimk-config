@@ -72,13 +72,13 @@ export function slugify(name: string, fallback = "subagent") {
 }
 
 /**
- * Map a custom (non-built-in) tool name to the pi-extension file that
- * registers it. Used to build the child's `--extension` whitelist after
+ * Map a tool name to its loadable extension file or builtin: specifier. Used to build the child's `--extension` whitelist after
  * `--no-extensions` disables global discovery. Returns undefined for built-in
  * tools and for unknown names (which simply won't be granted).
  */
 export function getToolExtensionPath(tool: string): string | undefined {
   if (BUILTIN_TOOLS.has(tool)) return undefined;
+  if (tool === "codemode") return "builtin:codemode";
   if (tool === "safe_bash") {
     const safeBash = paths.toolExtension("safe-bash.ts");
     return existsSync(safeBash) ? safeBash : undefined;
@@ -177,7 +177,7 @@ export function sandboxArgs(
     const extPaths = new Set<string>();
     for (const tool of loadout.toolAllowlist.split(",")) {
       const extPath = getToolExtensionPath(tool);
-      if (extPath && existsSync(extPath)) extPaths.add(extPath);
+      if (extPath) extPaths.add(extPath);
     }
     for (const extPath of extPaths) {
       parts.push("-e", shellEscape(extPath));
