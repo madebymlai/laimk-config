@@ -127,18 +127,6 @@ describe("sandbox.ts", () => {
       });
     });
 
-    it("loads the recorded CQ provider for a role that grants cq_run", () => {
-      withTempDir((dir) => {
-        const cqExtension = join(dir, "cq provider", "index.ts");
-        const args = sandboxArgs(loadout({ toolAllowlist: "read,codemode,cq_run", cqExtension }), {
-          artifactDir: dir, name: "w",
-        });
-        assert.deepEqual(args.filter((_, i) => args[i - 1] === "-e"), [
-          "'builtin:codemode'", `'${cqExtension}'`,
-        ]);
-      });
-    });
-
     it("replays an unrestricted loadout without a tool restriction", () => {
       withTempDir((dir) => {
         const args = sandboxArgs(loadout({ toolAllowlist: null, model: "m" }), {

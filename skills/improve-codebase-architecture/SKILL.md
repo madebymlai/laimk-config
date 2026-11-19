@@ -24,7 +24,7 @@ This command is built on a shared design vocabulary:
 
 Read any decisions in the area you're touching first (`bd list --type=decision`).
 
-Then send a scout to trace the candidate seams. Have it use `tools.cq_run` in codemode to find definitions, callers and tests, then read representative call sites to check where the friction actually is:
+Then send a scout to trace the candidate seams. Have it locate definitions, callers and tests, then read representative call sites to check where the friction actually is:
 
 - Where does understanding one concept require bouncing between many small modules?
 - Where are modules **shallow**, with an interface nearly as complex as the implementation?

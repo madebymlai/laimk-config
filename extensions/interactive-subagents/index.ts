@@ -406,11 +406,6 @@ async function launchSubagent(
   const agentDefs = launchBehavior.defs;
   const effectiveModel = params.model ?? agentDefs?.model;
   const toolAllowlist = computeToolAllowlist(agentDefs?.tools);
-  let cqExtension: string | undefined;
-  if (toolAllowlist?.split(",").includes("cq_run")) {
-    cqExtension = pi.getAllTools().find(tool => tool.name === "cq_run")?.sourceInfo.path;
-    if (!cqExtension) throw new Error("This role requires cq_run. Load the CQ Pi integration in the parent session and retry.");
-  }
   const effectiveSkills = agentDefs?.skills;
   const effectiveThinking = agentDefs?.thinking;
   const effectiveInteractive = launchBehavior.interactive;
@@ -499,7 +494,6 @@ async function launchSubagent(
   const loadout: SubagentLoadout = {
     agent: params.agent ?? null,
     toolAllowlist,
-    cqExtension,
     model: effectiveModel ?? null,
     thinking: effectiveThinking ?? null,
     systemPromptMode: systemPromptMode ?? null,

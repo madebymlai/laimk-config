@@ -713,11 +713,10 @@ describe("subagent discovery", () => {
     }
   });
 
-  it("grants codemode to all bundled roles and cq_run to all except researcher", () => {
+  it("grants codemode to all bundled roles", () => {
     for (const name of ["scout", "worker", "reviewer", "designer", "researcher"]) {
       const tools = computeToolAllowlist(resolveAgentLaunch(name).defs?.tools)?.split(",");
       assert.ok(tools && tools.includes("codemode"), `${name} must have codemode`);
-      assert.equal(tools.includes("cq_run"), name !== "researcher", `${name} CQ grant`);
     }
   });
 

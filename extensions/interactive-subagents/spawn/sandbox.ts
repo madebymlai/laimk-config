@@ -147,7 +147,7 @@ export function sandboxArgs(
 
     const extPaths = new Set<string>();
     for (const tool of loadout.toolAllowlist.split(",")) {
-      const extPath = tool === "cq_run" ? loadout.cqExtension : getToolExtensionPath(tool);
+      const extPath = getToolExtensionPath(tool);
       if (extPath) extPaths.add(extPath);
     }
     for (const extPath of extPaths) {

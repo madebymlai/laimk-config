@@ -39,6 +39,4 @@ Pi will load the extensions, skills, and theme from their directories the next t
 
 `extensions/powerline-footer/` is included and auto-discovered alongside the other extensions. It uses Catppuccin Mocha colours independently of the chosen application theme. A Powerline-capable terminal font is recommended.
 
-Scout, worker, reviewer, and designer require `cq_run`; researcher does not. Put `cq` on `PATH`, run `pi install /path/to/codemode-query/integrations/pi`, and `/reload` the parent session. The launcher passes that integration to restricted children alongside `builtin:codemode`.
-
 If your installation uses individual symlinks rather than copying this repository into `~/.pi/agent`, also link `extensions/powerline-footer` into `~/.pi/agent/extensions/`, then run `/reload`. The interactive-subagents launcher explicitly loads the same footer for fresh and resumed agents, including restricted sessions.
