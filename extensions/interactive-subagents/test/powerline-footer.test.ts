@@ -63,7 +63,7 @@ it("renders a single aligned Powerline row in real Pi and updates model, effort,
     const cli = process.env.PI_TEST_CLI ?? resolve(paths.root, "../../node_modules/@earendil-works/pi-coding-agent/dist/cli.js");
     const footer = join(paths.siblingExtensions, "powerline-footer", "index.ts");
     for (const [pane, name, extra] of [[main, "main", join(paths.siblingExtensions, "bash-guard", "index.ts")], [child, "child", paths.childEntry]]) {
-      const command = `cd ${shellEscape(dir)} && PI_CODING_AGENT_DIR=${shellEscape(join(dir, "config"))} ${shellEscape(process.execPath)} ${shellEscape(cli)} --no-extensions --no-skills --no-prompt-templates --no-themes -e ${shellEscape(fixture)} -e ${shellEscape(footer)} -e ${shellEscape(extra)} --model footer-smoke/model-one:high --session ${shellEscape(seed(name))}`;
+      const command = `cd ${shellEscape(dir)} && PI_CODING_AGENT_DIR=${shellEscape(join(dir, "config"))} ${shellEscape(process.execPath)} ${shellEscape(cli)} --no-extensions --no-skills --no-prompt-templates --no-themes -e ${shellEscape(fixture)} -e ${shellEscape(footer)} -e ${shellEscape(extra)} ${pane === main ? "--bash-guard-enabled " : ""}--model footer-smoke/model-one:high --session ${shellEscape(seed(name))}`;
       tmux("respawn-pane", "-k", "-t", pane, command);
     }
     const footerLine = (pane: string) => screen(pane).split("\n").find(line => line.includes("↑130k") && line.includes("↓4.0k")) ?? "";

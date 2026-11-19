@@ -388,45 +388,38 @@ export default function (pi: ExtensionAPI) {
 		default: false,
 	});
 
-	pi.registerFlag("bash-guard-disabled", {
-		description: "Start the session with bash-guard disabled (autonomous mode; hard-block floor still applies).",
+	pi.registerFlag("bash-guard-enabled", {
+		description: "Start the session with interactive bash-guard prompts enabled.",
 		type: "boolean",
 		default: false,
 	});
 
 	// Session-local toggle. Intentionally not persisted across reloads or restarts.
-	let disabled = false;
+	let disabled = true;
 
-	pi.on("session_start", async (event, ctx) => {
-		if (event.reason === "startup" && pi.getFlag("--bash-guard-disabled") === true) {
-			disabled = true;
-			const { theme } = ctx.ui;
-			const badge = theme.bg(
-				"toolErrorBg",
-				theme.bold(theme.fg("error", " BG OFF ")),
-			);
-			ctx.ui.setStatus(BASH_GUARD_STATUS_KEY, badge);
-		}
-		if (!disabled) ctx.ui.setStatus(BASH_GUARD_STATUS_KEY, ctx.ui.theme.fg("success", "BG ON"));
+	function publishStatus(ctx: ExtensionContext) {
+		const { theme } = ctx.ui;
+		ctx.ui.setStatus(BASH_GUARD_STATUS_KEY, disabled
+			? theme.bg("toolErrorBg", theme.bold(theme.fg("error", " BG OFF ")))
+			: theme.fg("success", "BG ON"));
+	}
+
+	pi.on("session_start", (event, ctx) => {
+		disabled = !(event.reason === "startup" && pi.getFlag("bash-guard-enabled") === true);
+		publishStatus(ctx);
 	});
 
 	pi.registerCommand("bash-guard", {
-		description: "Toggle bash-guard between interactive (default) and disabled (autonomous) for this session.",
+		description: "Toggle bash-guard between interactive and disabled (default) for this session.",
 		handler: async (_args, ctx) => {
 			disabled = !disabled;
+			publishStatus(ctx);
 			if (disabled) {
-				const { theme } = ctx.ui;
-				const badge = theme.bg(
-					"toolErrorBg",
-					theme.bold(theme.fg("error", " BG OFF ")),
-				);
-				ctx.ui.setStatus(BASH_GUARD_STATUS_KEY, badge);
 				ctx.ui.notify(
 					"bash-guard DISABLED for this session. Catastrophic operations are still hard-blocked. Run /bash-guard again to re-enable.",
 					"warning",
 				);
 			} else {
-				ctx.ui.setStatus(BASH_GUARD_STATUS_KEY, ctx.ui.theme.fg("success", "BG ON"));
 				ctx.ui.notify("bash-guard re-enabled.", "info");
 			}
 		},

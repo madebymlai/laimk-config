@@ -1,11 +1,11 @@
 # bash-guard (pi extension)
 
-Intercepts agent-issued `bash` tool calls in the main session and prompts before running
-anything destructive or questionable.
+Intercepts agent-issued `bash` tool calls in the main session and blocks catastrophic operations by default.
+Use `/bash-guard` to turn on interactive prompts for other risky commands.
 
 ## Modes
 
-### Enabled (default) — interactive prompt
+### Enabled — interactive prompt
 
 - Heuristically detects destructive/questionable commands via shell-aware parsing
 - Prompts for **any** `git ...` command (escalates severity for especially risky ones: `git rm`,
@@ -20,10 +20,10 @@ anything destructive or questionable.
 - If aborted, the tool call is blocked and the model receives a clear reason
 - Remembers recently aborted commands for 60 s to prevent retry loops
 
-### Disabled (autonomous) — hard-block floor only
+### Disabled (default) — hard-block floor only
 
-Turn the prompt off with `/bash-guard` (session-local toggle) or start the session with
-`--bash-guard-disabled`. A red `⚠ BG OFF` badge stays in the status line while disabled.
+The session starts with prompts off unless you pass `--bash-guard-enabled`.
+A red `BG OFF` badge stays in the status line while disabled.
 
 Prompting is skipped entirely, but a floor of catastrophic/unrecoverable operations stays
 hard-blocked with no user interaction:
@@ -49,11 +49,10 @@ hard-blocked with no user interaction:
 | `git reflog expire` | Remove recovery history |
 | `git gc --prune` | Prune unreachable objects |
 
-Routine git operations (`commit`, `pull`, `push`) pass through: disabling bash-guard is an
-explicit opt-in to autonomy, and those are recoverable.
+Routine git operations (`commit`, `pull`, `push`) pass through without prompting.
 
 The toggle is session-local and deliberately not persisted — `/reload` or a restart puts the
-prompt back on.
+prompt back off unless you start pi with `--bash-guard-enabled`.
 
 ## Subagents
 
@@ -70,6 +69,6 @@ Auto-discovered from `~/.pi/agent/extensions/bash-guard/`. Run `/reload` in pi.
 
 - Scope: `bash` tool calls only (`write`/`edit` and user `!` commands are not intercepted).
 - `/bash-guard`: toggle the prompt off/on for this session.
-- `--bash-guard-disabled`: start the session with the prompt already off.
+- `--bash-guard-enabled`: start the session with prompts on.
 - `--bash-guard-auto-allow`: allow flagged commands when there is no UI (e.g. running pi
   non-interactively). Not a disable switch — it only applies when prompting is impossible.

@@ -27,7 +27,7 @@ it("keeps the editors aligned when only main shows BG OFF, including after toggl
     const child = tmux("split-window", "-d", "-h", "-t", main, "-P", "-F", "#{pane_id}", "sleep 600");
     const cli = process.env.PI_TEST_CLI ?? resolve(paths.root, "../../node_modules/@earendil-works/pi-coding-agent/dist/cli.js");
     const base = `cd ${shellEscape(dir)} && PI_CODING_AGENT_DIR=${shellEscape(join(dir, "config"))} PI_SUBAGENT_NAME=Worker ${shellEscape(process.execPath)} ${shellEscape(cli)} --no-extensions --no-skills --no-prompt-templates --no-themes`;
-    tmux("respawn-pane", "-k", "-t", main, `${base} -e ${shellEscape(join(paths.root, "index.ts"))} -e ${shellEscape(join(paths.siblingExtensions, "bash-guard/index.ts"))} --session ${shellEscape(join(dir, "main.jsonl"))}`);
+    tmux("respawn-pane", "-k", "-t", main, `${base} -e ${shellEscape(join(paths.root, "index.ts"))} -e ${shellEscape(join(paths.siblingExtensions, "bash-guard/index.ts"))} --bash-guard-enabled --session ${shellEscape(join(dir, "main.jsonl"))}`);
     tmux("respawn-pane", "-k", "-t", child, `${base} -e ${shellEscape(paths.childEntry)} --session ${shellEscape(join(dir, "child.jsonl"))}`);
     await waitUntil(() => screen(main).includes(dir) && screen(child).includes(dir) &&
       screen(child).includes("Ctrl+Alt+A") && borderRow(main) >= 0 && borderRow(child) >= 0,
