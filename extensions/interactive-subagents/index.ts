@@ -405,7 +405,12 @@ async function launchSubagent(
   const launchBehavior = resolveAgentLaunch(params.agent);
   const agentDefs = launchBehavior.defs;
   const effectiveModel = params.model ?? agentDefs?.model;
-  const effectiveTools = agentDefs?.tools;
+  const toolAllowlist = computeToolAllowlist(agentDefs?.tools);
+  let cqExtension: string | undefined;
+  if (toolAllowlist?.split(",").includes("cq_run")) {
+    cqExtension = pi.getAllTools().find(tool => tool.name === "cq_run")?.sourceInfo.path;
+    if (!cqExtension) throw new Error("This role requires cq_run. Load the CQ Pi integration in the parent session and retry.");
+  }
   const effectiveSkills = agentDefs?.skills;
   const effectiveThinking = agentDefs?.thinking;
   const effectiveInteractive = launchBehavior.interactive;
@@ -488,14 +493,13 @@ async function launchSubagent(
   // spawning toolset), we disable global extension discovery and re-enable only
   // the extensions backing the whitelisted tools. Bare/fork spawns with no tool
   // restriction keep their full default toolset and all global extensions.
-  const toolAllowlist = computeToolAllowlist(effectiveTools);
-
   // Snapshot the fully-resolved sandbox beside the session file so a later
   // `send_message({ to })` resume can replay the exact same
   // restriction instead of relaunching pi with all global extensions + tools.
   const loadout: SubagentLoadout = {
     agent: params.agent ?? null,
     toolAllowlist,
+    cqExtension,
     model: effectiveModel ?? null,
     thinking: effectiveThinking ?? null,
     systemPromptMode: systemPromptMode ?? null,

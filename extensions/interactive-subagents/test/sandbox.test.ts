@@ -127,16 +127,15 @@ describe("sandbox.ts", () => {
       });
     });
 
-    it("emits one -e per backing extension, not per tool", () => {
+    it("loads the recorded CQ provider for a role that grants cq_run", () => {
       withTempDir((dir) => {
-        // Every cbmem tool comes from one flat file.
-        const args = sandboxArgs(
-          loadout({ toolAllowlist: "search_graph,trace_path,get_code_snippet" }),
-          { artifactDir: dir, name: "w" },
-        );
-        const eFlags = args.filter((a, i) => args[i - 1] === "-e");
-        assert.equal(new Set(eFlags).size, eFlags.length, "no duplicate -e");
-        assert.ok(eFlags.length <= 1, `expected at most one backing file, got ${eFlags.length}`);
+        const cqExtension = join(dir, "cq provider", "index.ts");
+        const args = sandboxArgs(loadout({ toolAllowlist: "read,codemode,cq_run", cqExtension }), {
+          artifactDir: dir, name: "w",
+        });
+        assert.deepEqual(args.filter((_, i) => args[i - 1] === "-e"), [
+          "'builtin:codemode'", `'${cqExtension}'`,
+        ]);
       });
     });
 

@@ -126,7 +126,7 @@ export function createMockExtensionApi() {
         sentMessages.push({ message, options });
       },
       getAllTools() {
-        return [];
+        return [{ name: "cq_run", sourceInfo: { path: "/test/extensions/cq/index.ts" } }];
       },
     } as any,
   };
