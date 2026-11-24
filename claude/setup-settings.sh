@@ -67,10 +67,10 @@ mkdir -p "$config_dir"
 tmp=$(mktemp "$settings.XXXXXX")
 trap 'rm -f "$tmp"' EXIT
 
-# The laimk-config marketplace points at this checkout, wherever it is.
-jq --argjson ours "$ours" --arg repo "$repo" '
+# The laimk-config marketplace is the repository root (one level up), wherever it is.
+jq --argjson ours "$ours" --arg root "$(dirname "$repo")" '
   . * $ours
-  * {extraKnownMarketplaces: {"laimk-config": {source: {source: "directory", path: $repo}}}}
+  * {extraKnownMarketplaces: {"laimk-config": {source: {source: "directory", path: $root}}}}
 ' "$settings" >"$tmp"
 mv "$tmp" "$settings"
 

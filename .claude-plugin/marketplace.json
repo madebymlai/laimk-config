@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "laimk",
-      "source": "./plugins/laimk",
+      "source": "./claude/plugins/laimk",
       "description": "Skills and agents shared with pi/ and antigravity/"
     }
   ]
