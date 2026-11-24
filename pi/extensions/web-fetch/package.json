@@ -1,0 +1,14 @@
+{
+	"name": "pi-web-fetch",
+	"private": true,
+	"type": "module",
+	"pi": {
+		"extensions": [
+			"./index.ts"
+		]
+	},
+	"dependencies": {
+		"defuddle": "^0.19.3",
+		"unpdf": "^1.4.0"
+	}
+}
