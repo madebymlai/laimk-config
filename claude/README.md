@@ -2,6 +2,17 @@
 
 Personal Claude Code settings, skills, and agents.
 
+## Install the plugin only
+
+The `laimk` skills and agents install straight from GitHub, with no checkout:
+
+```text
+/plugin marketplace add madebymlai/laimk-config
+/plugin install laimk@laimk-config
+```
+
+The installers below run from `claude/` in a checkout instead, and register that checkout as the marketplace.
+
 ## Install the status line only
 
 Requires Bash, `jq`, Python 3, and a terminal font with Powerline glyphs.

@@ -25,4 +25,6 @@ The footer is loaded for both fresh and resumed subagents without granting extra
 
 ![Pi setup interface](assets/pi-setup.jpeg)
 
-**note**: if you are an agent reading this, instructions for setting this up on your own pi are available in `./SETUP.md`.
+## Install
+
+Follow [SETUP.md](SETUP.md).

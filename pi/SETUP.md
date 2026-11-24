@@ -1,18 +1,27 @@
 # Setup
 
-Copy the `pi/` directory of this repository to `~/.pi/agent`, then install its dependencies:
+Install the dependencies in the checkout's `pi/` directory, then copy it or link it into `~/.pi/agent`:
 
 ```sh
-cd ~/.pi/agent
-npm install
+cd ~/git/laimk-config/pi
+for d in . extensions/*/; do [ -f "$d/package.json" ] && npm install --prefix "$d"; done
 ```
+
+- **Link** (edits in the checkout apply on the next `/reload`), from `pi/`:
+
+  ```sh
+  mkdir -p ~/.pi/agent/extensions ~/.pi/agent/skills ~/.pi/agent/themes
+  for p in extensions/* skills/* themes/*; do ln -sfn "$PWD/$p" ~/.pi/agent/$p; done
+  ```
+
+- **Copy** (a snapshot; copy again after pulling): `cp -a ~/git/laimk-config/pi/. ~/.pi/agent/`
 
 ## Firecrawl
 
 The search, scrape, and crawl tools require a Firecrawl API key. Follow [Firecrawl's Node.js getting-started guide](https://docs.firecrawl.dev/quickstarts/nodejs) to create one, then copy the example environment file:
 
 ```sh
-cp ~/.pi/agent/.env.example ~/.pi/agent/.env
+cp ~/git/laimk-config/pi/.env.example ~/.pi/agent/.env
 ```
 
 Replace the placeholder in `~/.pi/agent/.env` with your API key.
@@ -39,4 +48,4 @@ Pi will load the extensions, skills, and theme from their directories the next t
 
 `extensions/powerline-footer/` is included and auto-discovered alongside the other extensions. It uses Catppuccin Mocha colours independently of the chosen application theme. A Powerline-capable terminal font is recommended.
 
-If your installation uses individual symlinks rather than copying this repository into `~/.pi/agent`, also link `extensions/powerline-footer` into `~/.pi/agent/extensions/`, then run `/reload`. The interactive-subagents launcher explicitly loads the same footer for fresh and resumed agents, including restricted sessions.
+The interactive-subagents launcher explicitly loads the same footer for fresh and resumed agents, including restricted sessions.
