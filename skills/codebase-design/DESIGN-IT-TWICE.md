@@ -18,7 +18,7 @@ Show this to the user, then immediately proceed to Step 2. The user reads and th
 
 ### 2. Spawn designers
 
-Spawn 3+ sub-agents in parallel with `subagent({ agent: "designer", task: … })`. The `designer` agent is the one to use: it has no write tool, so it cannot drift from proposing into building. Pass a `name` too, one that says which constraint the agent is carrying, so the panes and the returning results stay tellable apart.
+Spawn 3+ sub-agents in parallel with `subagent({ agent: "designer", task: … })`. Pass a `name` too, one that says which constraint the agent is carrying, so the panes and the returning results stay tellable apart.
 
 Each must produce a **radically different** interface for the deepened module.
 
