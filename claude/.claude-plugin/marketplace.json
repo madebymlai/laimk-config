@@ -1,5 +1,5 @@
 {
-  "name": "claude-config",
+  "name": "laimk-config",
   "description": "Personal Claude Code plugins",
   "owner": {
     "name": "laimk"
@@ -8,7 +8,7 @@
     {
       "name": "laimk",
       "source": "./plugins/laimk",
-      "description": "Skills and agents ported from pi-config"
+      "description": "Skills and agents shared with pi/ and antigravity/"
     }
   ]
 }

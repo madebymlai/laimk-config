@@ -42,7 +42,7 @@ ours=$(cat <<'JSON'
   "enableWorkflows": false,
   "workflowKeywordTriggerEnabled": false,
   "enabledPlugins": {
-    "laimk@claude-config": true
+    "laimk@laimk-config": true
   },
   "outputStyle": "Concise",
   "promptSuggestionEnabled": false,
@@ -67,10 +67,10 @@ mkdir -p "$config_dir"
 tmp=$(mktemp "$settings.XXXXXX")
 trap 'rm -f "$tmp"' EXIT
 
-# The claude-config marketplace points at this checkout, wherever it is.
+# The laimk-config marketplace points at this checkout, wherever it is.
 jq --argjson ours "$ours" --arg repo "$repo" '
   . * $ours
-  * {extraKnownMarketplaces: {"claude-config": {source: {source: "directory", path: $repo}}}}
+  * {extraKnownMarketplaces: {"laimk-config": {source: {source: "directory", path: $repo}}}}
 ' "$settings" >"$tmp"
 mv "$tmp" "$settings"
 

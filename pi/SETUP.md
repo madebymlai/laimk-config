@@ -1,6 +1,6 @@
 # Setup
 
-Clone or copy this repository to `~/.pi/agent`, then install its dependencies:
+Copy the `pi/` directory of this repository to `~/.pi/agent`, then install its dependencies:
 
 ```sh
 cd ~/.pi/agent

@@ -1,7 +1,7 @@
-# antigravity-config
+# Antigravity
 
 Personal Antigravity settings, skills, and subagents: the Antigravity
-counterpart of [claude-config](https://github.com/madebymlai/claude-config).
+counterpart of [`claude/`](../claude/).
 
 The `laimk` plugin in `plugins/laimk/` carries the same skills and the scout,
 worker, reviewer, designer and researcher subagents, with tool names mapped to
@@ -18,7 +18,7 @@ Requires Bash, `jq`, Python 3, and a terminal font with Powerline glyphs.
 
 This replaces only `statusLine` in `~/.gemini/antigravity-cli/settings.json`.
 The command points at `statusline.py` in this checkout; rerun the installer
-after moving it. The row matches claude-config's: model and effort (omitted
+after moving it. The row matches `claude/`'s: model and effort (omitted
 when the model label already names it), `↑` input and `↓` output tokens in the
 current context, a ten-cell context bar, and the directory and Git branch when
 space permits. See [Status line customization](https://antigravity.google/docs/cli/statusline)

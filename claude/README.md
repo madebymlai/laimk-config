@@ -1,4 +1,4 @@
-# claude-config
+# Claude Code
 
 Personal Claude Code settings, skills, and agents.
 
