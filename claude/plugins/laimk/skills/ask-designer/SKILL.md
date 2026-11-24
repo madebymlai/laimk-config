@@ -1,5 +1,5 @@
 ---
-name: ask-fable-second-opinion
+name: ask-designer
 description: Get a second opinion from Fable on a hard problem, as a design built from a self-contained brief. Use when a problem resists the obvious fix, when a design is costly to get wrong, or when the user asks for Fable's take.
 ---
 
