@@ -13,7 +13,7 @@ Write the problem as the user would recognise it: what must become true, and the
 
 ## 2. Map the facts
 
-List every fact the problem rests on. For code: the modules involved, their callers and what those pass and use, the types and invariants, the error modes, the tests that pin current behaviour, the performance facts (hot paths, data sizes, latency and memory budgets), and the library APIs at the pinned version. For a user-facing flow: the users and the tasks they bring, the current flow and what the user meets at each step, with the code behind it, the conventions it follows, and the accessibility and platform constraints. For a system: the components and where they run, the data each owns, the traffic and its growth, and the failure and recovery requirements.
+List every fact the problem rests on. For code: the modules involved, their callers and what those pass and use, the types and invariants, the error modes, the tests that pin current behaviour, the performance facts (hot paths, data sizes, latency and memory budgets), and the library APIs at the pinned version. For a user-facing flow: the users and the tasks they bring, the current flow and what the user meets at each step, with the code behind it, the conventions it follows, and the accessibility and platform constraints. For a system: the modules and where each runs, the data each owns, the traffic and its growth, and the failure and recovery requirements.
 
 Mark each fact this session already holds from a file opened in it. When every fact is held, go straight to the brief. Otherwise dispatch `laimk:scout` for the missing ones, one per area and all in parallel, asking for the verbatim code with `path:line` rather than a summary, since the excerpt goes straight into the brief. Done when every fact on the list is backed by an excerpt or a source opened this session, and each that stayed unknown is named as unknown.
 
@@ -33,13 +33,13 @@ The brief is **neutral**: it describes what is, never what to build. A strong en
   - Logic: walk every input class, ordering and failure the problem implies, with the invariants explicit, then weigh performance on the hot path at the sizes given.
   - A module's interface: walk every caller, what it passes and what it does with the result.
   - A user-facing flow: walk every user, task and state the flow implies (first use, empty, loading, error, many items), and what the user sees and does at each step.
-  - A system: walk every component, the data each owns, the path each request takes between them, and what happens when one fails or restarts, or the load grows.
+  - A system: walk every module, where it runs, the data each owns, the path each request takes between them, and what happens when one fails or restarts, or the load grows.
 
 Done when a read-through finds no candidate solution, no direction hinted by wording, and no name that is neither defined nor excerpted.
 
 ## 4. Dispatch
 
-Run the Agent tool with `subagent_type: "laimk:designer"`, `model: "fable"`, an `effort` and the brief as the prompt. Pick `xhigh` when the problem is intricate (state machines, concurrency, numerics, a flow with many states, many interacting cases) or the design spans several modules or components, and `high` otherwise. When it returns blocked, answer its questions (scouting where needed) and send the answers to the same agent with SendMessage, so it keeps the work it has done.
+Run the Agent tool with `subagent_type: "laimk:designer"`, `model: "fable"`, an `effort` and the brief as the prompt. Pick `xhigh` when the problem is intricate (state machines, concurrency, numerics, a flow with many states, many interacting cases) or the design spans several modules, and `high` otherwise. When it returns blocked, answer its questions (scouting where needed) and send the answers to the same agent with SendMessage, so it keeps the work it has done.
 
 ## 5. Weigh the design
 
