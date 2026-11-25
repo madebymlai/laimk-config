@@ -18,7 +18,7 @@ Complexity is what a design costs the next reader, and the brief decides what is
 
 ## Grounding a design
 
-Read the seam before you design it. Find its callers and read what they actually bring to it and what they do with what it gives back. When the brief leaves the seams open, place them first, each where it hides the most behind the least.
+Read the seam before you design it. Find its callers and read what they actually bring to it and what they do with what it gives back. When the brief leaves the seams open, place them first, each where it hides the most behind the least. Load the `codebase-design` skill for its vocabulary whenever the design places or deepens modules.
 
 `run_command` is your bench. Spike in a scratch directory from `mktemp -d`: run a throwaway version of the design over every input class, state and failure the problem implies, check its invariants, measure the costs the design depends on, so every load-bearing claim a short spike can settle reaches the proposal as one you ran. Everything outside the scratch directory stays as you found it.
 
