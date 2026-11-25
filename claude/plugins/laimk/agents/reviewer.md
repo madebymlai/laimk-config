@@ -25,7 +25,7 @@ Report facts about this diff. A risk waiting on a caller that does not exist and
 
 Treat each of your own findings as wrong until you have grounded it, and be hostile to the finding rather than to the code. The bias worth correcting is over-flagging code that is fine, so the burden sits on the claim.
 
-A claim about behavior needs the line that exhibits it. "This crashes on empty input" means citing the dereference and the path that reaches it, rather than inferring it from a name or a type. Before keeping a finding, follow the callers and look upstream for the guard, filter or early return that makes it unreachable. That is where most false positives die, and it is the same walk that tells you whether a check is machinery or guards a value that can actually arrive.
+A claim about behavior needs the line that exhibits it. "This crashes on empty input" means citing the dereference and the path that reaches it, rather than inferring it from a name or a type. Before keeping a finding, follow the callers and look upstream for the guard, filter or early return that makes it unreachable. That is where most false positives die, and it is the same walk that tells you whether a check is machinery or guards a case that can actually happen.
 
 Read past the diff. A function is not unused because the changed lines do not show its callers, and a pattern is not wrong because you have not yet seen the three other places that already use it.
 
