@@ -13,7 +13,7 @@ Write the problem as the user would recognise it: what must become true, and the
 
 ## 2. Map the facts
 
-List every fact the problem rests on. For code: the modules involved, their callers and what those pass and use, the types and invariants, the error modes, the tests that pin current behaviour, the performance facts (hot paths, data sizes, latency and memory budgets), and the library APIs at the pinned version. For a user-facing flow: the users and the tasks they bring, the current flow and what the user meets at each step (the code behind it, and screenshots or transcripts where it has them), the conventions it follows, such as a design system or a CLI's style, and the accessibility and platform constraints.
+List every fact the problem rests on. For code: the modules involved, their callers and what those pass and use, the types and invariants, the error modes, the tests that pin current behaviour, the performance facts (hot paths, data sizes, latency and memory budgets), and the library APIs at the pinned version. For a user-facing flow: the users and the tasks they bring, the current flow and what the user meets at each step, with the code behind it, the conventions it follows, and the accessibility and platform constraints.
 
 Mark each fact this session already holds from a file opened in it. When every fact is held, go straight to the brief. Otherwise dispatch `laimk:scout` for the missing ones, one per area and all in parallel, asking for the verbatim code with `path:line` rather than a summary, since the excerpt goes straight into the brief. Done when every fact on the list is backed by an excerpt or a source opened this session, and each that stayed unknown is named as unknown.
 
@@ -22,7 +22,7 @@ Mark each fact this session already holds from a file opened in it. When every f
 The brief is **neutral**: it describes what is, never what to build. A strong engineer who has never seen this repository designs from it without a single question back. It carries, in order:
 
 - The problem, goal and scope from step 1.
-- The code: verbatim excerpts with `path:line` for everything involved (signatures, the bodies whose logic matters, representative call sites), the paths to any screenshots or transcripts, and a sentence each for the periphery.
+- The code: verbatim excerpts with `path:line` for everything involved (signatures, the bodies whose logic matters, representative call sites), the paths to any files that show the current flow, and a sentence each for the periphery.
 - The constraints, and only the hard ones: a rule goes in when a design breaking it would be rejected outright, such as a contract external callers rely on or a project rule the change must obey. Quote it.
 - The performance facts, with their numbers.
 - The unknowns from step 2.
