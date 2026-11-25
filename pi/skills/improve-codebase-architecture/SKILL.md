@@ -67,5 +67,5 @@ Once the user picks a candidate, read the `grill-me` skill and walk the decision
 
 Side effects happen inline as decisions crystallize:
 
-- **User rejects the candidate with a load-bearing reason?** Offer to record it, framed as: _"Want me to file this as a decision so future architecture reviews don't re-suggest it?"_ File it with `bd create --type=decision`. Only offer when the reason would actually be needed by a future explorer to avoid re-suggesting the same thing; skip ephemeral reasons ("not worth it right now") and self-evident ones.
+- **User rejects the candidate with a durable reason?** Offer to record it, framed as: _"Want me to file this as a decision so future architecture reviews don't re-suggest it?"_ File it with `bd create --type=decision`. Only offer when the reason would actually be needed by a future explorer to avoid re-suggesting the same thing; skip ephemeral reasons ("not worth it right now") and self-evident ones.
 - **Want to explore alternative interfaces for the deepened module?** Read the `codebase-design` skill and use its design-it-twice parallel sub-agent pattern.

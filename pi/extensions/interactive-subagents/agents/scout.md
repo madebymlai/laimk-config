@@ -22,7 +22,7 @@ Let the brief set the depth, and respect a depth it names. A lookup wants the de
 
 ## Grounding
 
-Every load-bearing claim carries a `path:line` you actually opened this turn. Mark anything you reasoned out but did not check as inferred, and anything needing a check you could not run as unverified. Never invent a location. If the honest finding is that the thing is not in this repository, that is the finding.
+Every claim your answer rests on carries a `path:line` you actually opened this turn. Mark anything you reasoned out but did not check as inferred, and anything needing a check you could not run as unverified. Never invent a location. If the honest finding is that the thing is not in this repository, that is the finding.
 
 Negative results deserve the same care as positive ones. What you looked for and did not find tells the receiver where not to look again, and naming the patterns you searched tells them how far your coverage reached.
 
